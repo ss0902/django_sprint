@@ -8,7 +8,7 @@
         <h1 class="title is-4">サインアップ</h1>
         <h2 class="subtitle is-6">Sign up</h2>
         <hr>
-        <p class="help">アカウントをお持ちの方へ：ログインは<a href="#">こちら</a></p>
+        <p class="help">アカウントをお持ちの方へ：ログインは<a href="{% url 'cms:login' %}">こちら</a></p>
         <br>
         <form method="post" action="">
             {% csrf_token %}
