@@ -37,7 +37,15 @@
         </nav>
     </header>
     <!-- MESSAGE -->
-    <div></div>
+    {% for field, errors in form.errors.items %}
+    <article class="message is-warning">
+        <div class="message-body">
+        {% for error in errors %}
+            <p><strong>{{ error }}</strong></p>
+        {% endfor %}
+        </div>
+    </article>
+{% endfor %}
     <!-- MAIN -->
     <main>
         {% block hero %}{% endblock %}
