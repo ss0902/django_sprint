@@ -7,7 +7,7 @@ from django.shortcuts import resolve_url
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import (
-    CreateView, UpdateView,
+    CreateView, UpdateView, DeleteView,
 )
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -67,3 +67,9 @@ class UserDetail(DetailView):
 class UserList(ListView):
     model = UserModel
     template_name = 'cms/user_list.html'
+
+
+class UserDelete(OnlyYouMixin, DeleteView):
+    model = UserModel
+    template_name = 'cms/user_delete.html'
+    success_url = reverse_lazy('cms:top')
