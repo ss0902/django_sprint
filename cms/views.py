@@ -9,6 +9,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import (
     CreateView, UpdateView,
 )
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 from .mixins import OnlyYouMixin
 from .forms import (
@@ -50,3 +52,18 @@ class UserUpdate(OnlyYouMixin, UpdateView):
 
     def get_success_url(self):
         return resolve_url('cms:user_detail', pk=self.kwargs['pk'])
+
+
+class UserDetail(DetailView):
+    model = UserModel
+    template_name = 'cms/user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pk'] = self.kwargs['pk']
+        return context
+
+
+class UserList(ListView):
+    model = UserModel
+    template_name = 'cms/user_list.html'
