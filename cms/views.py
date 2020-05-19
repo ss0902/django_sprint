@@ -3,14 +3,16 @@ from django.contrib.auth.views import (
     LoginView, LogoutView,
 )
 from django.http import HttpResponseRedirect
+from django.shortcuts import resolve_url
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import (
-    CreateView,
+    CreateView, UpdateView,
 )
 
+from .mixins import OnlyYouMixin
 from .forms import (
-    LoginForm, UserCreateForm,
+    LoginForm, UserCreateForm, UserUpdateForm,
 )
 
 UserModel = get_user_model()
@@ -39,3 +41,12 @@ class UserCreate(CreateView):
         login(self.request, user)
         self.object = user
         return HttpResponseRedirect(self.get_success_url())
+
+
+class UserUpdate(OnlyYouMixin, UpdateView):
+    model = UserModel
+    form_class = UserUpdateForm
+    template_name = 'cms/user_update.html'
+
+    def get_success_url(self):
+        return resolve_url('cms:user_detail', pk=self.kwargs['pk'])
